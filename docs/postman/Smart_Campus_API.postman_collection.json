@@ -1,0 +1,373 @@
+{
+  "info": {
+    "name": "Smart Campus Management System API",
+    "description": "Comprehensive Postman Collection v2.1 for University DBMS & Academic Operations",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000/api",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "1. Admin Login",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@campus.edu\",\n  \"password\": \"Campus@123\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/auth/login", "host": ["{{baseUrl}}"], "path": ["auth", "login"] }
+          }
+        },
+        {
+          "name": "2. Faculty Login",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"faculty1@campus.edu\",\n  \"password\": \"Campus@123\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/auth/login", "host": ["{{baseUrl}}"], "path": ["auth", "login"] }
+          }
+        },
+        {
+          "name": "3. Student Login",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"student1@campus.edu\",\n  \"password\": \"Campus@123\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/auth/login", "host": ["{{baseUrl}}"], "path": ["auth", "login"] }
+          }
+        },
+        {
+          "name": "4. Verify Session (Me)",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/auth/me", "host": ["{{baseUrl}}"], "path": ["auth", "me"] }
+          }
+        },
+        {
+          "name": "5. Logout",
+          "request": {
+            "method": "POST",
+            "url": { "raw": "{{baseUrl}}/auth/logout", "host": ["{{baseUrl}}"], "path": ["auth", "logout"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Dashboard",
+      "item": [
+        {
+          "name": "Get Dashboard Summary",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/dashboard/summary", "host": ["{{baseUrl}}"], "path": ["dashboard", "summary"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Departments",
+      "item": [
+        {
+          "name": "List Departments",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/departments", "host": ["{{baseUrl}}"], "path": ["departments"] }
+          }
+        },
+        {
+          "name": "Create Department",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"AI\",\n  \"name\": \"Artificial Intelligence\",\n  \"description\": \"Intelligent Systems\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/departments", "host": ["{{baseUrl}}"], "path": ["departments"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Students",
+      "item": [
+        {
+          "name": "Browse Students (Paginated)",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/students?page=1&limit=10", "host": ["{{baseUrl}}"], "path": ["students"] }
+          }
+        },
+        {
+          "name": "Get Student Dossier",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/students/1/dossier", "host": ["{{baseUrl}}"], "path": ["students", "1", "dossier"] }
+          }
+        },
+        {
+          "name": "Register Student",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"newstudent@campus.edu\",\n  \"roll_number\": \"CS2025099\",\n  \"first_name\": \"Daniel\",\n  \"last_name\": \"Miller\",\n  \"dob\": \"2004-05-12\",\n  \"enrollment_year\": 2025,\n  \"department_id\": 1\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/students", "host": ["{{baseUrl}}"], "path": ["students"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Attendance",
+      "item": [
+        {
+          "name": "Get Course Attendance",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/attendance/course/1?date=2026-02-02", "host": ["{{baseUrl}}"], "path": ["attendance", "course", "1"] }
+          }
+        },
+        {
+          "name": "Submit Bulk Attendance",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"course_id\": 1,\n  \"attendance_date\": \"2026-03-01\",\n  \"records\": [\n    { \"enrollment_id\": 1, \"status\": \"Present\", \"remarks\": \"Attentive\" },\n    { \"enrollment_id\": 3, \"status\": \"Late\", \"remarks\": \"Late 5 mins\" }\n  ]\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/attendance/bulk", "host": ["{{baseUrl}}"], "path": ["attendance", "bulk"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Exams & Results",
+      "item": [
+        {
+          "name": "List Scheduled Exams",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/exams", "host": ["{{baseUrl}}"], "path": ["exams"] }
+          }
+        },
+        {
+          "name": "Submit Bulk Marks",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"exam_id\": 1,\n  \"results\": [\n    { \"enrollment_id\": 1, \"marks_obtained\": 47.5 },\n    { \"enrollment_id\": 3, \"marks_obtained\": 39.0 }\n  ]\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/results/bulk", "host": ["{{baseUrl}}"], "path": ["results", "bulk"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Reports & Auditing",
+      "item": [
+        {
+          "name": "Attendance Summary Report",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/reports/attendance", "host": ["{{baseUrl}}"], "path": ["reports", "attendance"] }
+          }
+        },
+        {
+          "name": "Export Attendance CSV",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/reports/export/attendance", "host": ["{{baseUrl}}"], "path": ["reports", "export", "attendance"] }
+          }
+        },
+        {
+          "name": "Security Audit Trail",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/audit-logs", "host": ["{{baseUrl}}"], "path": ["audit-logs"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Timetable & Scheduling",
+      "item": [
+        {
+          "name": "Get Timetable Slots",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/timetable", "host": ["{{baseUrl}}"], "path": ["timetable"] }
+          }
+        },
+        {
+          "name": "Schedule Lecture Slot",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"course_id\": 1,\n  \"day_of_week\": \"Monday\",\n  \"start_time\": \"09:00:00\",\n  \"end_time\": \"10:00:00\",\n  \"room_number\": \"Room 101\",\n  \"semester\": 4,\n  \"academic_year\": \"2025-2026\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/timetable", "host": ["{{baseUrl}}"], "path": ["timetable"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Leave Requests & Excuses",
+      "item": [
+        {
+          "name": "Submit Leave Request",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"enrollment_id\": 1,\n  \"leave_date\": \"2026-03-01\",\n  \"reason\": \"Medical specialist consultation\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/leaves", "host": ["{{baseUrl}}"], "path": ["leaves"] }
+          }
+        },
+        {
+          "name": "Review Leave Request",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"Approved\",\n  \"review_remarks\": \"Excused absence granted with doctor note\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/leaves/1/review", "host": ["{{baseUrl}}"], "path": ["leaves", "1", "review"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Notifications & Alerts",
+      "item": [
+        {
+          "name": "Get Notifications",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/notifications", "host": ["{{baseUrl}}"], "path": ["notifications"] }
+          }
+        },
+        {
+          "name": "Mark All Read",
+          "request": {
+            "method": "PATCH",
+            "url": { "raw": "{{baseUrl}}/notifications/read-all", "host": ["{{baseUrl}}"], "path": ["notifications", "read-all"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Official Transcript & At-Risk",
+      "item": [
+        {
+          "name": "Get Student Official Transcript",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/students/1/transcript", "host": ["{{baseUrl}}"], "path": ["students", "1", "transcript"] }
+          }
+        },
+        {
+          "name": "At-Risk Retention Report",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/reports/at-risk", "host": ["{{baseUrl}}"], "path": ["reports", "at-risk"] }
+          }
+        },
+        {
+          "name": "Dispatch At-Risk Warning Alerts",
+          "request": {
+            "method": "POST",
+            "url": { "raw": "{{baseUrl}}/reports/at-risk/notify", "host": ["{{baseUrl}}"], "path": ["reports", "at-risk", "notify"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Financial Ledger & Fees",
+      "item": [
+        {
+          "name": "List Fee Structures",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/fees/structures", "host": ["{{baseUrl}}"], "path": ["fees", "structures"] }
+          }
+        },
+        {
+          "name": "Define Fee Structure",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"department_id\": 1,\n  \"semester\": 4,\n  \"academic_year\": \"2025-2026\",\n  \"tuition_fee\": 45000.00,\n  \"development_fee\": 10000.00,\n  \"laboratory_fee\": 8000.00,\n  \"library_fee\": 2000.00,\n  \"other_charges\": 1500.00,\n  \"due_date\": \"2026-04-15\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/fees/structures", "host": ["{{baseUrl}}"], "path": ["fees", "structures"] }
+          }
+        },
+        {
+          "name": "Generate Batch Invoices",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"structure_id\": 1\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/fees/invoices/generate-batch", "host": ["{{baseUrl}}"], "path": ["fees", "invoices", "generate-batch"] }
+          }
+        },
+        {
+          "name": "List Invoices",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/fees/invoices", "host": ["{{baseUrl}}"], "path": ["fees", "invoices"] }
+          }
+        },
+        {
+          "name": "Record Payment",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 20000.00,\n  \"payment_mode\": \"UPI\",\n  \"transaction_reference\": \"TXN_TEST_998811\",\n  \"remarks\": \"Online installment\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/fees/invoices/1/pay", "host": ["{{baseUrl}}"], "path": ["fees", "invoices", "1", "pay"] }
+          }
+        },
+        {
+          "name": "Get Official Receipt with SHA-256",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/fees/payments/1/receipt", "host": ["{{baseUrl}}"], "path": ["fees", "payments", "1", "receipt"] }
+          }
+        }
+      ]
+    }
+  ]
+}
+
